@@ -1,41 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello world</title>
-    <script src="http://fb.me/react-0.12.1.js"></script>
-    <script src="http://fb.me/JSXTransformer-0.12.1.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
-<style type="text/css">
-.NoteApp{
-	margin: 30px auto;
-}
-
-
-.SearchField{
-	width: 100%;
-	padding-right: 0px;
-
-}
-.textarea{
-	width: 100%;
-	height: 300px;
-}
-
-.NoteList{
-	margin-top: 10px;
-	padding-left: 0px;
-	list-style-type: none;
-}
-</style>
-</head>
-<body>
-
-<script type="text/jsx">
-
-
+//var React = require( 'react');
 
 var NoteApp = React.createClass({
 	render: function(){
@@ -113,13 +76,6 @@ var NOTES = [
  	{author: 'Ron', title: 'Rons Text2', text: 'This is Ron here and this is my text'}
 ];
 
-React.render(<NoteApp notes={NOTES}/>, document.body);
+React.render(<NoteApp notes={NOTES}/>, document.getElementById("content"));
 
-
-
-</script>
-
-
-</body>
-
-</html>
+//module.exports.NoteApp;
