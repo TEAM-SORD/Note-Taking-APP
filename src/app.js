@@ -2,23 +2,23 @@
 /** @jsx React.DOM */
 
 // Let's create a "real-time search" component
-var SearchList = React.createClass({displayName: "SearchList",
+var SearchList = React.createClass({
 
 	render: function(){
 		var list = this.props.libraries.map(function(l){
-                 return React.createElement("li", null, l.name, " ", React.createElement("a", {href: l.title}, l.title))
+                 return <li>{l.name} <a href={l.url}>{l.url}</a></li>
               });
      
      return (
-     	React.createElement("ul", null, 
-     		list
-     	)
+         	<ul>
+                {list}
+            </ul>
      	);
-}
+    }
 
 });
 
-var SearchContainer = React.createClass({displayName: "SearchContainer",
+var SearchContainer = React.createClass({
 
     getInitialState: function(){
         return { searchString: '' };
@@ -49,13 +49,12 @@ var SearchContainer = React.createClass({displayName: "SearchContainer",
 
         }
 
-        return React.createElement("div", null, 
-                    React.createElement("input", {type: "text", value: this.state.searchString, onChange: this.handleChange, placeholder: "Type here"}), 
-                    React.createElement(SearchList, {libraries: libraries})
-                    
-
-                );
-
+        return (
+                <div>
+                    <input type="text" value={this.state.searchString} onChange = {this.handleChange} placeholder="Type here"/>
+                    <SearchList libraries={libraries}/> 
+                </div>
+                )
     }
 });
 
@@ -81,7 +80,4 @@ var libraries = [
 
 // Render the SearchExample component on the page
 
-React.renderComponent(
-    React.createElement(SearchContainer, {items: libraries }),
-    document.body
-);
+React.render(<SearchContainer items={libraries}/>, document.body);
