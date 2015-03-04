@@ -12,7 +12,7 @@
 // });
 
 var http = require('http');
-var ecstatic = require('ecstatic')({root: __dirname + '/Public'});
+var ecstatic = require('ecstatic')({root: __dirname + '/public'});
 
 ////////////
 // SERVER //
