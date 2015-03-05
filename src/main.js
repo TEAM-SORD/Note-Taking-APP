@@ -1,7 +1,25 @@
 
 /** @jsx React.DOM */
 
-// Let's create a "real-time search" component
+//var React = require('react');
+
+var SearchField = React.createClass({
+    handleChange: function(e){
+
+        // If you comment out this line, the text box will not change its value.
+        // This is because in React, an input cannot change independently of the value
+        // that was assigned to it. In our case this is this.state.searchString.
+        var searchText = this.refs.searchText.getDOMNode().value.trim();
+        this.props.updateSearchString( {searchString: searchText } );
+    },
+    render: function() {
+        return (
+            <input type="text" value={this.props.searchString} onChange = {this.handleChange} ref='searchText' placeholder="Type here"/>
+        );
+    }
+
+});
+
 var SearchList = React.createClass({
 
 	render: function(){
@@ -24,15 +42,9 @@ var SearchContainer = React.createClass({
         return { searchString: '' };
     },
 
-    handleChange: function(e){
-
-        // If you comment out this line, the text box will not change its value.
-        // This is because in React, an input cannot change independently of the value
-        // that was assigned to it. In our case this is this.state.searchString.
-
-        this.setState({searchString:e.target.value});
+    updateSearchString: function( search ){
+        this.setState(search);
     },
-
     render: function() {
 
         var libraries = this.props.items,
@@ -51,7 +63,7 @@ var SearchContainer = React.createClass({
 
         return (
                 <div>
-                    <input type="text" value={this.state.searchString} onChange = {this.handleChange} placeholder="Type here"/>
+                    <SearchField value={this.state.searchString} updateSearchString={this.updateSearchString}/>
                     <SearchList libraries={libraries}/> 
                 </div>
                 )

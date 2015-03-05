@@ -19,7 +19,7 @@ var ecstatic = require('ecstatic')({root: __dirname + '/public'});
 ///////////
 http.createServer(function (req, res) {
 	ecstatic(req,res);
-}).listen(process.env.PORT || 8000);
+}).listen(process.env.PORT || 5000);
  
-var currentPort = process.env.PORT || 8000;
+var currentPort = process.env.PORT || 5000;
 console.log('Server running on port '+currentPort);
