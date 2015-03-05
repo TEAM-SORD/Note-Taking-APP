@@ -1,7 +1,7 @@
 
 /** @jsx React.DOM */
 
-//var React = require('react');
+var React = require('react');
 
 var SearchField = React.createClass({
     handleChange: function(e){
@@ -26,7 +26,7 @@ var SearchList = React.createClass({
 		var list = this.props.libraries.map(function(l){
                  return <li>{l.name} <a href={l.url}>{l.url}</a></li>
               });
-     
+
      return (
          	<ul>
                 {list}
@@ -47,7 +47,7 @@ var SearchContainer = React.createClass({
     },
     render: function() {
 
-        var libraries = this.props.items,
+        var libraries = this.props.libraries,
             searchString = this.state.searchString.trim().toLowerCase();
 
 
@@ -64,13 +64,36 @@ var SearchContainer = React.createClass({
         return (
                 <div>
                     <SearchField value={this.state.searchString} updateSearchString={this.updateSearchString}/>
-                    <SearchList libraries={libraries}/> 
+                    <SearchList libraries={libraries}/>
                 </div>
-                )
+                );
     }
 });
 
-                                                                                                                                                             
+var NoteContainer = React.createClass({
+  render: function() {
+    return (
+      <form className= "noteContainer">
+        <input type="text" placeholder="name"/>
+        <input type="text" placeholder="title"/>
+        <input type="submit" value="post"/>
+        <input type="text" placeholder="notepad"/>
+      </form>
+    );
+  }
+});
+
+var NotePadApp = React.createClass({
+  render: function() {
+    return (
+      <div className="notePadApp">
+        <SearchContainer libraries={this.props.items}/>
+        <NoteContainer/>
+      </div>
+    );
+  }
+});
+
 var libraries = [
 
     { name: 'Boris', title: 'http://documentcloud.github.io/backbone/'},
@@ -92,4 +115,21 @@ var libraries = [
 
 // Render the SearchExample component on the page
 
-React.render(<SearchContainer items={libraries}/>, document.body);
+React.render(<NotePadApp items={libraries}/>, document.body);
+
+
+
+// var exports = module.exports = {};
+
+function sum( value1, value2 ) {
+  return value2 + value1;
+}
+
+module.exports = {
+    SearchField : SearchField,
+    SearchList  : SearchList,
+    SearchContainer : SearchContainer,
+    NotePadApp: NotePadApp,
+    NoteContainer: NoteContainer,
+    sum             : sum
+};
