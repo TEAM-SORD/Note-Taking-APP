@@ -38,18 +38,9 @@ var SearchList = React.createClass({
 
 var SearchContainer = React.createClass({
 
-    getInitialState: function(){
-        return { searchString: '' };
-    },
-
-    updateSearchString: function( search ){
-        this.setState(search);
-    },
     render: function() {
-
         var libraries = this.props.libraries,
-            searchString = this.state.searchString.trim().toLowerCase();
-
+            searchString = this.props.searchString.trim().toLowerCase();
 
         if(searchString.length > 0){
 
@@ -58,58 +49,87 @@ var SearchContainer = React.createClass({
             libraries = libraries.filter(function(l){
                 return l.name.toLowerCase().match( searchString );
             });
-
         }
-
         return (
-                <div>
-                    <SearchField value={this.state.searchString} updateSearchString={this.updateSearchString}/>
+                <div className="searchArea col-xs-4">
+                    <SearchField searchString={this.props.searchString} updateSearchString={this.props.updateSearchString}/>
                     <SearchList libraries={libraries}/>
                 </div>
-                );
+        );
     }
 });
 
 var NoteContainer = React.createClass({
+    handleChange: function(e) {
+        e.preventDefault();
+        console.log( 'in handleChange');
+
+        var newNote = {
+            name: this.refs.name.getDOMNode().value.trim(),
+            title: this.refs.title.getDOMNode().value.trim(),
+            text: this.refs.text.getDOMNode().value.trim()
+        };
+        this.refs.name.getDOMNode().value = "";
+        this.refs.title.getDOMNode().value = "";
+        this.refs.text.getDOMNode().value = "";
+        
+        this.props.updateLibrary( newNote );
+    },
   render: function() {
+    console.log('render form');
     return (
-      <form className= "noteContainer">
-        <input type="text" placeholder="name"/>
-        <input type="text" placeholder="title"/>
-        <input type="submit" value="post"/>
-        <input type="text" placeholder="notepad"/>
+      <form className= "noteContainer col-xs-8" onSubmit={this.handleChange}>
+        <input type="text" placeholder="name" ref="name"/>
+        <input type="text" placeholder="title" ref="title"/>
+        <input type="submit" value="post" />
+        <input type="text" placeholder="notepad" ref="text"/>
       </form>
     );
   }
 });
 
 var NotePadApp = React.createClass({
-  render: function() {
-    return (
-      <div className="notePadApp">
-        <SearchContainer libraries={this.props.items}/>
-        <NoteContainer/>
-      </div>
-    );
-  }
+    getInitialState: function(){
+        return { 
+                    searchString: '',
+                    library : libraries,
+
+               };
+    },
+
+    updateSearchString: function( search ){
+        this.setState( search );
+    },
+    updateLibrary: function( newNote ){
+        console.log('in updateLibrary');
+        this.state.library.push( newNote );
+    },
+    render: function() {
+        return (
+            <div className="notePadApp col-xs-12">
+                <SearchContainer searchString={this.state.searchString} libraries={this.props.items} updateSearchString={this.updateSearchString}/>
+                <NoteContainer updateLibrary={this.updateLibrary}/>
+            </div>
+            );
+        }
 });
 
 var libraries = [
 
-    { name: 'Boris', title: 'http://documentcloud.github.io/backbone/'},
-    { name: 'AngularJS', title: 'https://angularjs.org/'},
-    { name: 'jQuery', title: 'http://jquery.com/'},
-    { name: 'Prototype', title: 'http://www.prototypejs.org/'},
-    { name: 'React', title: 'http://facebook.github.io/react/'},
-    { name: 'Ember', title: 'http://emberjs.com/'},
-    { name: 'Knockout.js', title: 'http://knockoutjs.com/'},
-    { name: 'Dojo', title: 'http://dojotoolkit.org/'},
-    { name: 'Mootools', title: 'http://mootools.net/'},
-    { name: 'Underscore', title: 'http://documentcloud.github.io/underscore/'},
-    { name: 'Lodash', title: 'http://lodash.com/'},
-    { name: 'Moment', title: 'http://momentjs.com/'},
-    { name: 'Express', title: 'http://expressjs.com/'},
-    { name: 'Koa', title: 'http://koajs.com/'},
+    { name: 'Boris', title: 'http://documentcloud.github.io/backbone/', text: ""},
+    { name: 'AngularJS', title: 'https://angularjs.org/', text: ""},
+    { name: 'jQuery', title: 'http://jquery.com/', text: ""},
+    { name: 'Prototype', title: 'http://www.prototypejs.org/', text: ""},
+    { name: 'React', title: 'http://facebook.github.io/react/', text: ""},
+    { name: 'Ember', title: 'http://emberjs.com/', text: ""},
+    { name: 'Knockout.js', title: 'http://knockoutjs.com/', text: ""},
+    { name: 'Dojo', title: 'http://dojotoolkit.org/', text: ""},
+    { name: 'Mootools', title: 'http://mootools.net/', text: ""},
+    { name: 'Underscore', title: 'http://documentcloud.github.io/underscore/', text: ""},
+    { name: 'Lodash', title: 'http://lodash.com/', text: ""},
+    { name: 'Moment', title: 'http://momentjs.com/', text: ""},
+    { name: 'Express', title: 'http://expressjs.com/', text: ""},
+    { name: 'Koa', title: 'http://koajs.com/', text: ""},
 
 ];
 
