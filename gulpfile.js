@@ -5,13 +5,13 @@ var gulp        = require("gulp"),
     watchify    = require('watchify'),
     reactify    = require('reactify');
     connect     = require('gulp-connect'),
-    open        = require('gulp-open');
-    port        = process.env.port||5000;
+    open        = require('gulp-open'),
+    port        = (process.env.port||5000);
 
 var paths = {
    scripts: "src/**/*.js",
    tests: "__tests__" 
-}
+};
 gulp.task('browserify', function() {
     var bundler = browserify({
         entries: ['./src/main.js'], 
