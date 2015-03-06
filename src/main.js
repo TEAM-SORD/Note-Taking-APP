@@ -15,17 +15,22 @@ var SearchField = React.createClass({
     },
     render: function() {
         return (
-            <input type="text" value={this.props.searchString} onChange = {this.handleChange} ref='searchText' placeholder="Type here"/>
+            <input className="searchField" type="text" value={this.props.searchString} onChange = {this.handleChange} ref='searchText' placeholder="Type here"/>
         );
     }
 
 });
 
 var SearchList = React.createClass({
-
+    handleSelect: function(note) {
+        console.log( 'click worked');
+        this.props.displayNote( note );
+    },
     render: function(){
-        var list = this.props.libraries.map(function(l){
-                 return <li>{l.name} <a href={l.url}>{l.url}</a></li>
+        var that = this;
+        var list = this.props.libraries.map(function(l, idx){
+                var id = 'item' + +idx;
+                 return <li ref={id} onClick={that.handleSelect.bind(null, l)}>{l.name} :  {l.title}</li>;
               });
 
      return (
@@ -54,7 +59,7 @@ var SearchContainer = React.createClass({
         return (
                 <div className="searchArea col-xs-4">
                     <SearchField searchString={this.props.searchString} updateSearchString={this.props.updateSearchString}/>
-                    <SearchList libraries={libraries}/>
+                    <SearchList libraries={libraries} displayNote={this.props.displayNote}/>
                 </div>
         );
     }
@@ -80,10 +85,11 @@ var NoteContainer = React.createClass({
     console.log('render form');
     return (
       <form className= "noteContainer col-xs-8" onSubmit={this.handleChange}>
-        <input type="text" placeholder="name" ref="name"/>
-        <input type="text" placeholder="title" ref="title"/>
-        <input type="submit" value="post" />
-        <input type="text" placeholder="notepad" ref="text"/>
+        <input className="nameField" type="text" placeholder="name" value={this.props.displayedNote.name} ref="name"/>
+        <input className="titleField" type="text" placeholder="title" value={this.props.displayedNote.title} ref="title"/>
+        <input className="saveButt" type="submit" value="Save" />
+        <input className="clearButt" type="submit" value="Clear" />
+        <input className="textField" type="text" placeholder="notepad" value={this.props.displayedNote.text} ref="text"/>
       </form>
     );
   }
@@ -107,7 +113,8 @@ var NotePadApp = React.createClass({
     getInitialState: function(){
         return { 
                     searchString: '',
-                    library : libraries,
+                    library : [],
+                    displayedNote : {}
                };
     },
     componentDidMount: function() {
@@ -135,34 +142,20 @@ var NotePadApp = React.createClass({
         });
         //this.state.library.push( newNote );
     },
+    displayNote: function( note ){
+        this.setState( {displayedNote: note } );
+        console.log( this.state.displayedNote );
+    },
     render: function() {
         return (
             <div className="notePadApp col-xs-12">
-                <SearchContainer searchString={this.state.searchString} libraries={this.state.library} updateSearchString={this.updateSearchString}/>
-                <NoteContainer updateLibrary={this.updateLibrary}/>
+                <SearchContainer searchString={this.state.searchString} libraries={this.state.library} displayNote={this.displayNote} updateSearchString={this.updateSearchString}/>
+                <NoteContainer displayedNote={this.state.displayedNote} updateLibrary={this.updateLibrary}/>
             </div>
             );
         }
 });
 
-var libraries = [
-
-    { name: 'Boris', title: 'http://documentcloud.github.io/backbone/', text: ""},
-    { name: 'AngularJS', title: 'https://angularjs.org/', text: ""},
-    { name: 'jQuery', title: 'http://jquery.com/', text: ""},
-    { name: 'Prototype', title: 'http://www.prototypejs.org/', text: ""},
-    { name: 'React', title: 'http://facebook.github.io/react/', text: ""},
-    { name: 'Ember', title: 'http://emberjs.com/', text: ""},
-    { name: 'Knockout.js', title: 'http://knockoutjs.com/', text: ""},
-    { name: 'Dojo', title: 'http://dojotoolkit.org/', text: ""},
-    { name: 'Mootools', title: 'http://mootools.net/', text: ""},
-    { name: 'Underscore', title: 'http://documentcloud.github.io/underscore/', text: ""},
-    { name: 'Lodash', title: 'http://lodash.com/', text: ""},
-    { name: 'Moment', title: 'http://momentjs.com/', text: ""},
-    { name: 'Express', title: 'http://expressjs.com/', text: ""},
-    { name: 'Koa', title: 'http://koajs.com/', text: ""},
-
-];
 
 // Render the SearchExample component on the page
 
