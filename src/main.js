@@ -90,7 +90,7 @@ var NoteContainer = React.createClass({
 });
 
 var NotePadApp = React.createClass({
-    loadCommentsFromServer: function() {
+    loadLibraryFromServer: function() {
         $.ajax({
           url: this.props.url,
           dataType: 'json',
@@ -111,15 +111,29 @@ var NotePadApp = React.createClass({
                };
     },
     componentDidMount: function() {
-        this.loadCommentsFromServer();
-        setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+        this.loadLibraryFromServer();
+        setInterval(this.loadLibraryFromServer, this.props.pollInterval);
     },
     updateSearchString: function( search ){
         this.setState( search );
     },
     updateLibrary: function( newNote ){
         console.log('in updateLibrary');
-        this.state.library.push( newNote );
+        $.ajax({
+          url: this.props.url,
+          dataType: 'json',
+          type: 'POST',
+          data: newNote,
+          success: function(data) {
+            this.setState({library: data});
+          }
+          .bind(this),
+          error: function(xhr, status, err) {
+            console.error(this.props.url, status, err.toString());
+          }
+          .bind(this)
+        });
+        //this.state.library.push( newNote );
     },
     render: function() {
         return (
