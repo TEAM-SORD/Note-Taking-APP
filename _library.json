@@ -2,67 +2,67 @@
     {
         "name": "Boris",
         "title": "http://documentcloud.github.io/backbone/",
-        "text": ""
+        "text": "Boris's note"
     },
     {
         "name": "AngularJS",
         " title": "https://angularjs.org/",
-        "text": ""
+        "text": "OOh Angular uses Templates sooo not Components.."
     },
     {
         "name": "jQuery",
         "title": "http://jquery.com/",
-        "text": ""
+        "text": "Remember this?"
     },
     {
         "name": "Prototype",
         "title": "http://www.prototypejs.org/",
-        "text": ""
+        "text": "Not Pseudo-classical says Doug"
     },
     {
         "name": "React",
         "title": "http://facebook.github.io/react/",
-        "text": ""
+        "text": "This is what we are working on this week"
     },
     {
         "name": "Ember",
         "title": "http://emberjs.com/",
-        "text": ""
+        "text": "A framework.."
     },
     {
         "name": "Knockout.js",
         "title": "http://knockoutjs.com/",
-        "text": ""
+        "text": "Not yet.."
     },
     {
         "name": "Dojo",
         "title": "http://dojotoolkit.org/",
-        "text": ""
+        "text": "Nope.."
     },
     {
         "name": "Mootools",
         "title": "http://mootools.net/",
-        "text": ""
+        "text": "Heard of it.."
     },
     {
         "name": "Underscore",
         "title": "http://documentcloud.github.io/underscore/",
-        "text": ""
+        "text": "Templating again.."
     },
     {
         "name": "Lodash",
         "title": "http://lodash.com/",
-        "text": ""
+        "text": "Extended array functionality.."
     },
     {
         "name": "Moment",
         "title": "http://momentjs.com/",
-        "text": ""
+        "text": "Time and how to handle it."
     },
     {
         "name": "Express",
         "title": "http://expressjs.com/",
-        "text": ""
+        "text": "For handy endpoint routing.."
     },
     {
         "name": "Koa",
@@ -73,5 +73,20 @@
         "name": "sarah",
         "title": "my title",
         "text": "my text"
+    },
+    {
+        "name": "React",
+        "title": "http://facebook.github.io/react/",
+        "text": "This is what we are working on this week"
+    },
+    {
+        "name": "sarah",
+        "title": "demo",
+        "text": "what to say? Please Work!"
+    },
+    {
+        "name": "sarah",
+        "title": "demo2",
+        "text": "please work"
     }
 ]
