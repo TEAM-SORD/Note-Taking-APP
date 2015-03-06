@@ -23,16 +23,16 @@ var SearchField = React.createClass({
 
 var SearchList = React.createClass({
 
-	render: function(){
-		var list = this.props.libraries.map(function(l){
+    render: function(){
+        var list = this.props.libraries.map(function(l){
                  return <li>{l.name} <a href={l.url}>{l.url}</a></li>
               });
 
      return (
-         	<ul>
+            <ul>
                 {list}
             </ul>
-     	);
+        );
     }
 
 });
@@ -90,14 +90,30 @@ var NoteContainer = React.createClass({
 });
 
 var NotePadApp = React.createClass({
+    loadCommentsFromServer: function() {
+        $.ajax({
+          url: this.props.url,
+          dataType: 'json',
+          success: function(data) {
+            this.setState({library: data});
+          }
+          .bind(this),
+          error: function(xhr, status, err) {
+            console.error(this.props.url, status, err.toString());
+          }
+          .bind(this)
+        });
+    },
     getInitialState: function(){
         return { 
                     searchString: '',
                     library : libraries,
-
                };
     },
-
+    componentDidMount: function() {
+        this.loadCommentsFromServer();
+        setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+    },
     updateSearchString: function( search ){
         this.setState( search );
     },
@@ -108,7 +124,7 @@ var NotePadApp = React.createClass({
     render: function() {
         return (
             <div className="notePadApp col-xs-12">
-                <SearchContainer searchString={this.state.searchString} libraries={this.props.items} updateSearchString={this.updateSearchString}/>
+                <SearchContainer searchString={this.state.searchString} libraries={this.state.library} updateSearchString={this.updateSearchString}/>
                 <NoteContainer updateLibrary={this.updateLibrary}/>
             </div>
             );
@@ -136,7 +152,7 @@ var libraries = [
 
 // Render the SearchExample component on the page
 
-React.render(<NotePadApp items={libraries}/>, document.body);
+React.render(<NotePadApp url='library.json' pollInterval={2000} />, document.body);
 
 
 
