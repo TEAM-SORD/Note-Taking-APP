@@ -17,7 +17,7 @@ var SearchContainer = React.createClass({
             });
         }
         return (
-                <div className="searchArea col-xs-4">
+                <div className="searchArea col-xs-6">
                     <SearchField searchString={this.props.searchString} updateSearchString={this.props.updateSearchString}/>
                     <SearchList libraries={libraries} displayNote={this.props.displayNote}/>
                 </div>
